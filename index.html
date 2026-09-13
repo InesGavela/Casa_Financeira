@@ -69,6 +69,69 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
+        /* Quando instalada como PWA no telemóvel, a aplicação usa todo o ecrã.
+           O simulador com moldura mantém-se apenas no navegador/PC. */
+        @media (display-mode: standalone), (display-mode: fullscreen) {
+            html, body {
+                width: 100%;
+                height: 100%;
+                min-height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                display: block;
+                background: var(--bg-app);
+                overflow: hidden;
+            }
+            .phone-container {
+                width: 100vw;
+                height: 100dvh;
+                min-height: 100vh;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .status-bar {
+                height: calc(44px + env(safe-area-inset-top));
+                padding-top: env(safe-area-inset-top);
+            }
+            .bottom-nav {
+                height: calc(76px + env(safe-area-inset-bottom));
+                padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            }
+        }
+
+        html.ios-standalone,
+        html.ios-standalone body {
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        html.ios-standalone body {
+            display: block;
+            background: var(--bg-app);
+        }
+        html.ios-standalone .phone-container {
+            width: 100vw;
+            height: 100dvh;
+            min-height: 100vh;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        html.ios-standalone .status-bar {
+            height: calc(44px + env(safe-area-inset-top));
+            padding-top: env(safe-area-inset-top);
+        }
+        html.ios-standalone .bottom-nav {
+            height: calc(76px + env(safe-area-inset-bottom));
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        }
+
         /* Notsh / Status Bar */
         .status-bar {
             height: 44px;
@@ -1408,24 +1471,11 @@
     <script>
         // ESTADO GLOBAL DA APLICAÇÃO (Persistido via localStorage)
         let state = {
-            saldoAnterior: 800.00,
-            contas: [
-                { id: "c1", nome: "Conta Principal", saldoInicial: 2350.00 },
-                { id: "c2", nome: "Conta Poupança", saldoInicial: 5800.00 },
-                { id: "c3", nome: "Conta Casa", saldoInicial: 1200.00 }
-            ],
-            movimentos: [
-                { id: "m1", tipo: "despesa", valor: 35.80, categoria: "Alimentação", contaId: "c1", data: "2026-09-10", descricao: "Supermercado" },
-                { id: "m2", tipo: "despesa", valor: 42.50, categoria: "Alimentação", contaId: "c1", data: "2026-09-10", descricao: "Restaurante" },
-                { id: "m3", tipo: "receita", valor: 2300.00, categoria: "Salário", contaId: "c1", data: "2026-09-01", descricao: "Salário Setembro" },
-                { id: "m4", tipo: "receita", valor: 200.00, categoria: "Outros", contaId: "c2", data: "2026-09-01", descricao: "Rendimento Extra" }
-            ],
+            saldoAnterior: 0,
+            contas: [],
+            movimentos: [],
             investimentos: [],
-            despesasFixas: [
-                { id: "f1", nome: "Prestação da casa", valor: 650.00, categoria: "Casa", dia: 27, ativa: true },
-                { id: "f2", nome: "Internet / Telefone", valor: 45.00, categoria: "Financeiro", dia: 5, ativa: true },
-                { id: "f3", nome: "Colégio", valor: 350.00, categoria: "Família", dia: 8, ativa: true }
-            ]
+            despesasFixas: []
         };
 
         // Carregar do LocalStorage se existir
@@ -1434,6 +1484,37 @@
         }
 
         if (!Array.isArray(state.investimentos)) state.investimentos = [];
+
+        // Migração única: versões anteriores vinham com dados de demonstração.
+        // Só são removidos se o estado ainda for exatamente o conjunto dummy original;
+        // dados reais já introduzidos pelo utilizador nunca são apagados.
+        (function limparDadosDemoAntigos(){
+            const demoContas = JSON.stringify([
+                {id:"c1",nome:"Conta Principal",saldoInicial:2350},
+                {id:"c2",nome:"Conta Poupança",saldoInicial:5800},
+                {id:"c3",nome:"Conta Casa",saldoInicial:1200}
+            ]);
+            const demoMovimentos = JSON.stringify([
+                {id:"m1",tipo:"despesa",valor:35.8,categoria:"Alimentação",contaId:"c1",data:"2026-09-10",descricao:"Supermercado"},
+                {id:"m2",tipo:"despesa",valor:42.5,categoria:"Alimentação",contaId:"c1",data:"2026-09-10",descricao:"Restaurante"},
+                {id:"m3",tipo:"receita",valor:2300,categoria:"Salário",contaId:"c1",data:"2026-09-01",descricao:"Salário Setembro"},
+                {id:"m4",tipo:"receita",valor:200,categoria:"Outros",contaId:"c2",data:"2026-09-01",descricao:"Rendimento Extra"}
+            ]);
+            const demoFixas = JSON.stringify([
+                {id:"f1",nome:"Prestação da casa",valor:650,categoria:"Casa",dia:27,ativa:true},
+                {id:"f2",nome:"Internet / Telefone",valor:45,categoria:"Financeiro",dia:5,ativa:true},
+                {id:"f3",nome:"Colégio",valor:350,categoria:"Família",dia:8,ativa:true}
+            ]);
+            const isOldDemo = Number(state.saldoAnterior)===800 &&
+                JSON.stringify(state.contas||[])===demoContas &&
+                JSON.stringify(state.movimentos||[])===demoMovimentos &&
+                JSON.stringify(state.despesasFixas||[])===demoFixas &&
+                (!state.investimentos || state.investimentos.length===0);
+            if(isOldDemo){
+                state = {saldoAnterior:0,contas:[],movimentos:[],despesasFixas:[],investimentos:[]};
+                localStorage.setItem("familia_feliz_state", JSON.stringify(state));
+            }
+        })();
 
         function saveState() {
             localStorage.setItem("familia_feliz_state", JSON.stringify(state));
@@ -2343,13 +2424,20 @@
         async function desbloquearApp(){const p=document.getElementById('pin-unlock').value,saved=localStorage.getItem('familia_feliz_pin_hash'),err=document.getElementById('pin-error');if(!saved){document.getElementById('pin-overlay').style.display='none';return}if(await hashPin(p)===saved){document.getElementById('pin-overlay').style.display='none';document.getElementById('pin-unlock').value='';err.innerText='';resetAutoLockTimer()}else{err.innerText='PIN incorreto. Tente novamente.';document.getElementById('pin-unlock').value=''}}
 
         // Inicialização primária automática ao abrir a aplicação
+        if (window.navigator && window.navigator.standalone === true) {
+            document.documentElement.classList.add('ios-standalone');
+        }
+
         window.onload = function() {
+            if (window.navigator && window.navigator.standalone === true) {
+                document.documentElement.classList.add('ios-standalone');
+            }
             applyTheme(localStorage.getItem('familia_feliz_theme')||'light');
             initCategoryIcons();
             renderHome();
             renderSaudeFinanceira();
             if (localStorage.getItem('familia_feliz_pin_hash')) { document.getElementById('pin-overlay').style.display='flex'; setTimeout(()=>document.getElementById('pin-unlock').focus(),100); }
-            if(localStorage.getItem('familia_feliz_secret_start')==='1'){setTimeout(()=>document.getElementById('secret-toggle')?.click(),50)}
+            if(localStorage.getItem('familia_feliz_secret_start')==='1'){setTimeout(()=>document.getElementById('privacy-toggle')?.click(),50)}
             resetAutoLockTimer();
         };
         ['click','touchstart','keydown','scroll'].forEach(ev=>document.addEventListener(ev,resetAutoLockTimer,{passive:true}));
