@@ -530,6 +530,48 @@
             appearance: none;
             padding-right: 7px;
         }
+        .date-filter-wrap {
+            position: relative;
+            min-width: 0;
+        }
+        .date-filter-wrap .date-placeholder {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 11px;
+            pointer-events: none;
+            z-index: 1;
+            transition: opacity .12s ease;
+        }
+        .date-filter-wrap.has-value .date-placeholder { opacity: 0; }
+        .date-filter-wrap input[type="date"] { position: relative; z-index: 2; background: transparent; }
+        .category-filter { position: relative; min-width: 0; }
+        .category-filter-btn {
+            width: 100%; height: 34px; box-sizing: border-box;
+            padding: 6px 8px; border-radius: 8px; border: 1px solid #E2E8F0;
+            background: white; color: var(--text-main); font-size: 11px;
+            display: flex; align-items: center; justify-content: space-between; gap: 6px;
+            cursor: pointer;
+        }
+        .category-filter-btn .filter-cat-label { display:flex; align-items:center; gap:6px; min-width:0; }
+        .category-filter-btn .filter-cat-label span:last-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .category-filter-btn .cat-icon { width:20px; height:20px; border-radius:6px; background:#F5F7FA; color:var(--primary); display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; }
+        .category-filter-btn .cat-icon svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+        .category-filter-menu {
+            display:none; position:absolute; left:0; right:0; top:39px; z-index:30;
+            background:#fff; border:1px solid #E2E8F0; border-radius:10px; padding:5px;
+            box-shadow:0 10px 24px rgba(15,23,42,.12);
+        }
+        .category-filter-menu.open { display:block; }
+        .category-filter-option {
+            width:100%; border:0; background:transparent; padding:7px 6px; border-radius:8px;
+            display:flex; align-items:center; gap:7px; text-align:left; color:var(--text-main); font-size:11px;
+        }
+        .category-filter-option:hover, .category-filter-option.selected { background:#F5F7FA; }
+        .category-filter-option .cat-icon { width:22px; height:22px; border-radius:7px; background:#F5F7FA; color:var(--primary); display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; }
+        .category-filter-option .cat-icon svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
         .filters-row #search-mov {
             grid-column: 1 / -1;
             font-size: 12px;
@@ -1049,21 +1091,32 @@
                 </div>
                 <div class="filters-row">
                     <input type="text" id="search-mov" placeholder="🔎 Pesquisar descrição..." oninput="renderMovimentos()">
-                    <input type="date" id="filter-date-from" onchange="renderMovimentos()" title="Data inicial">
-                    <input type="date" id="filter-date-to" onchange="renderMovimentos()" title="Data final">
+                    <div class="date-filter-wrap" id="date-from-wrap"><span class="date-placeholder">dd/mm/aaaa</span><input type="date" id="filter-date-from" onchange="updateDateFilterPlaceholder(this); renderMovimentos()" title="Data inicial"></div>
+                    <div class="date-filter-wrap" id="date-to-wrap"><span class="date-placeholder">dd/mm/aaaa</span><input type="date" id="filter-date-to" onchange="updateDateFilterPlaceholder(this); renderMovimentos()" title="Data final"></div>
                     <select id="filter-type" onchange="renderMovimentos()">
                         <option value="all">Receitas e despesas</option>
                         <option value="receita">Só receitas</option>
                         <option value="despesa">Só despesas</option>
                     </select>
-                    <select id="filter-cat" onchange="renderMovimentos()">
-                        <option value="all">Todas as categorias</option>
-                        <option value="Casa">🏠 Casa</option>
-                        <option value="Alimentação">🍔 Alimentação</option>
-                        <option value="Transportes">🚌 Transportes</option>
-                        <option value="Salário">💼 Salário</option>
-                        <option value="Outros">➕ Outros</option>
-                    </select>
+                    <div class="category-filter" id="category-filter">
+                        <input type="hidden" id="filter-cat" value="all">
+                        <button type="button" class="category-filter-btn" onclick="toggleCategoryFilter(event)">
+                            <span class="filter-cat-label"><span class="cat-icon" data-category-icon="Outras"></span><span id="filter-cat-label-text">Todas as categorias</span></span>
+                            <span style="color:#94A3B8;font-size:10px;">▾</span>
+                        </button>
+                        <div class="category-filter-menu" id="category-filter-menu">
+                            <button type="button" class="category-filter-option selected" data-value="all" onclick="selectFilterCategory('all','Todas as categorias')"><span class="cat-icon" data-category-icon="Outras"></span><span>Todas as categorias</span></button>
+                            <button type="button" class="category-filter-option" data-value="Casa" onclick="selectFilterCategory('Casa','Casa')"><span class="cat-icon" data-category-icon="Casa"></span><span>Casa</span></button>
+                            <button type="button" class="category-filter-option" data-value="Alimentação" onclick="selectFilterCategory('Alimentação','Alimentação')"><span class="cat-icon" data-category-icon="Alimentação"></span><span>Alimentação</span></button>
+                            <button type="button" class="category-filter-option" data-value="Transportes" onclick="selectFilterCategory('Transportes','Transportes')"><span class="cat-icon" data-category-icon="Transportes"></span><span>Transportes</span></button>
+                            <button type="button" class="category-filter-option" data-value="Salário" onclick="selectFilterCategory('Salário','Salário')"><span class="cat-icon" data-category-icon="Salário"></span><span>Salário</span></button>
+                            <button type="button" class="category-filter-option" data-value="Outros" onclick="selectFilterCategory('Outros','Outros')"><span class="cat-icon" data-category-icon="Outros"></span><span>Outros</span></button>
+                            <button type="button" class="category-filter-option" data-value="Família" onclick="selectFilterCategory('Família','Família')"><span class="cat-icon" data-category-icon="Família"></span><span>Família</span></button>
+                            <button type="button" class="category-filter-option" data-value="Lazer" onclick="selectFilterCategory('Lazer','Lazer')"><span class="cat-icon" data-category-icon="Lazer"></span><span>Lazer</span></button>
+                            <button type="button" class="category-filter-option" data-value="Financeiro" onclick="selectFilterCategory('Financeiro','Financeiro')"><span class="cat-icon" data-category-icon="Financeiro"></span><span>Financeiro</span></button>
+                            <button type="button" class="category-filter-option" data-value="Outras" onclick="selectFilterCategory('Outras','Outras')"><span class="cat-icon" data-category-icon="Outras"></span><span>Outras</span></button>
+                        </div>
+                    </div>
                 </div>
                 <div id="movimentos-timeline">
                     <!-- Agrupado por datas via JS -->
@@ -1575,6 +1628,47 @@
             if (expSelect) expSelect.innerHTML = html;
         }
 
+        function updateDateFilterPlaceholder(input) {
+            const wrap = input && input.parentElement;
+            if (wrap) wrap.classList.toggle('has-value', !!input.value);
+        }
+
+        function toggleCategoryFilter(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById('category-filter-menu');
+            if (menu) menu.classList.toggle('open');
+        }
+
+        function selectFilterCategory(value, label) {
+            const input = document.getElementById('filter-cat');
+            const labelEl = document.getElementById('filter-cat-label-text');
+            if (input) input.value = value;
+            if (labelEl) labelEl.textContent = label;
+            document.querySelectorAll('.category-filter-option').forEach(b => b.classList.toggle('selected', b.dataset.value === value));
+            const btnIcon = document.querySelector('.category-filter-btn .cat-icon');
+            if (btnIcon) { btnIcon.innerHTML = iconMap[value === 'all' ? 'Outras' : value] || iconMap['Outras']; }
+            const menu = document.getElementById('category-filter-menu');
+            if (menu) menu.classList.remove('open');
+            renderMovimentos();
+        }
+
+        document.addEventListener('click', function(e) {
+            const box = document.getElementById('category-filter');
+            if (box && !box.contains(e.target)) {
+                const menu = document.getElementById('category-filter-menu');
+                if (menu) menu.classList.remove('open');
+            }
+        });
+
+        function initMovimentoFilters() {
+            const from = document.getElementById('filter-date-from');
+            const to = document.getElementById('filter-date-to');
+            if (from) updateDateFilterPlaceholder(from);
+            if (to) updateDateFilterPlaceholder(to);
+            const btnIcon = document.querySelector('.category-filter-btn .cat-icon');
+            if (btnIcon) btnIcon.innerHTML = iconMap['Outras'];
+        }
+
         function selectCategory(inputId, value, button) {
             const input = document.getElementById(inputId);
             if (!input) return;
@@ -2078,6 +2172,7 @@
                 </div>
             `}).join('');
             initCategoryIcons();
+        initMovimentoFilters();
         }
 
         function openNovaFixa() {
