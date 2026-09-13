@@ -830,6 +830,57 @@
         .cat-detail-stat .stat-value{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;}
 
         .invest-total-card{background:var(--primary);color:#fff;border-radius:18px;padding:20px;box-shadow:var(--shadow);margin-bottom:14px}.invest-total-label{font-size:12px;opacity:.82}.invest-total-value{font-size:29px;font-weight:800;margin-top:4px}.invest-section{margin-top:18px}.invest-section-title{font-size:15px;font-weight:700;margin-bottom:10px;color:var(--text)}.invest-list{display:flex;flex-direction:column;gap:10px}.invest-item{background:#fff;border-radius:15px;padding:14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;cursor:pointer}.invest-item-icon{width:42px;height:42px;border-radius:13px;background:#F5F7FA;color:var(--primary);display:flex;align-items:center;justify-content:center;flex:0 0 42px}.invest-item-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.invest-item-main{min-width:0;flex:1}.invest-item-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.invest-item-type{font-size:11px;color:var(--text-muted);margin-top:2px}.invest-item-value{font-size:14px;font-weight:800;color:var(--text);white-space:nowrap}.invest-empty{background:#fff;border-radius:15px;padding:24px 16px;text-align:center;color:var(--text-muted);font-size:12px;box-shadow:var(--shadow)}.invest-distribution{background:#fff;border-radius:15px;padding:15px;box-shadow:var(--shadow)}.invest-dist-row{display:flex;align-items:center;gap:10px;margin:9px 0}.invest-dist-name{width:82px;font-size:12px;color:var(--text)}.invest-dist-bar{flex:1;height:7px;background:#EDF1F4;border-radius:99px;overflow:hidden}.invest-dist-fill{height:100%;background:var(--primary);border-radius:99px}.invest-dist-value{width:64px;text-align:right;font-size:12px;font-weight:700;color:var(--text)}.invest-form-card{background:#fff;border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+
+        /* PWA instalada: ocupar o ecrã inteiro e esconder o simulador virtual */
+        @media (display-mode: standalone), (display-mode: fullscreen) {
+            body {
+                min-height: 100dvh;
+                width: 100vw;
+                margin: 0;
+                background: var(--bg-app);
+                display: block;
+            }
+            .phone-container {
+                width: 100vw;
+                height: 100dvh;
+                min-height: 100dvh;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+                overflow: hidden;
+            }
+            .status-bar {
+                display: none !important;
+            }
+            .screens-wrapper {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: calc(90px + env(safe-area-inset-bottom));
+            }
+        }
+
+        html.ios-standalone body {
+            min-height: 100dvh;
+            width: 100vw;
+            margin: 0;
+            background: var(--bg-app);
+            display: block;
+        }
+        html.ios-standalone .phone-container {
+            width: 100vw;
+            height: 100dvh;
+            min-height: 100dvh;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+        }
+        html.ios-standalone .status-bar {
+            display: none !important;
+        }
+        html.ios-standalone .screens-wrapper {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: calc(90px + env(safe-area-inset-bottom));
+        }
 </style>
 </head>
 <body>
@@ -2368,6 +2419,11 @@
         if(window.matchMedia){window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if((localStorage.getItem('familia_feliz_theme')||'light')==='system')applyTheme('system')})}
     </script>
     <script>
+        // Safari/iOS: quando a app foi adicionada ao ecrã inicial, remover o simulador virtual.
+        if (window.navigator && window.navigator.standalone === true) {
+            document.documentElement.classList.add('ios-standalone');
+        }
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
         }
