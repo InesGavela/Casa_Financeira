@@ -165,6 +165,66 @@
             background: #1F2937;
             color: #CBD5E1;
         }
+        .header-actions { display:flex; align-items:center; gap:8px; }
+        .app-header .calendar-btn {
+            width:36px; height:36px; padding:0; border:0; border-radius:11px;
+            background:#F5F7FA; color:var(--primary); display:flex; align-items:center; justify-content:center; cursor:pointer;
+        }
+        .app-header .calendar-btn svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+        .theme-dark .app-header .calendar-btn { background:#1F2937; color:#CBD5E1; }
+
+        .calendar-card { background:var(--bg-card); border-radius:16px; padding:16px; box-shadow:var(--shadow); margin-bottom:14px; }
+        .calendar-toolbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+        .calendar-toolbar h3 { font-size:17px; color:var(--primary); text-transform:capitalize; }
+        .calendar-nav-btn { width:34px; height:34px; border:0; border-radius:10px; background:#F5F7FA; color:var(--primary); font-size:20px; cursor:pointer; }
+        .theme-dark .calendar-nav-btn { background:#273244; color:#CBD5E1; }
+        .calendar-week { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px; }
+        .calendar-week span { text-align:center; font-size:10px; color:var(--text-muted); font-weight:600; }
+        .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+        .calendar-day { min-height:42px; border:0; background:transparent; border-radius:10px; color:var(--text-main); font-size:13px; position:relative; cursor:pointer; }
+        .calendar-day.muted { color:#B8C0C8; }
+        .calendar-day.today { background:rgba(18,78,67,.10); color:var(--primary); font-weight:700; }
+        .calendar-day.selected { background:var(--primary); color:white; }
+        .calendar-day .event-dot { position:absolute; width:14px; height:4px; border-radius:999px; background:var(--primary); bottom:4px; left:50%; transform:translateX(-50%); opacity:.9; }
+        .calendar-day.today .event-dot { opacity:1; }
+        .calendar-day.selected .event-dot { background:white; opacity:1; }
+        .calendar-day.empty { cursor:default; }
+        .calendar-day-list { margin-top:12px; }
+        .calendar-event { display:flex; align-items:center; gap:11px; padding:12px 0; border-bottom:1px solid #E2E8F0; }
+        .calendar-event:last-child { border-bottom:0; }
+        .calendar-event-icon { width:38px; height:38px; flex:0 0 38px; border-radius:11px; background:#F5F7FA; color:var(--primary); display:flex; align-items:center; justify-content:center; }
+        .calendar-event-icon svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+        .calendar-event-main { flex:1; min-width:0; }
+        .calendar-event-title { font-size:14px; font-weight:700; color:var(--text-main); }
+        .calendar-event-meta { font-size:11px; color:var(--text-muted); margin-top:3px; }
+        .calendar-event-actions { display:flex; gap:5px; }
+        .calendar-event-actions button { border:0; background:none; color:var(--text-muted); padding:5px; cursor:pointer; }
+        .calendar-empty { text-align:center; color:var(--text-muted); font-size:13px; padding:18px 8px; }
+        .calendar-form-actions { display:flex; gap:8px; margin-top:8px; }
+        .calendar-form-actions .btn-outline { margin-top:0; flex:1; }
+        .event-detail-card { background:var(--bg-card); border-radius:20px; padding:22px 18px; box-shadow:var(--shadow); text-align:center; }
+        .event-detail-icon { width:58px; height:58px; margin:0 auto 14px; border-radius:18px; background:rgba(18,78,67,.10); color:var(--primary); display:flex; align-items:center; justify-content:center; }
+        .event-detail-icon svg { width:27px; height:27px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+        .event-detail-title { font-size:22px; font-weight:800; color:var(--text-main); margin:0 0 7px; }
+        .event-detail-date { font-size:13px; color:var(--text-muted); }
+        .event-detail-info { margin-top:22px; text-align:left; }
+        .event-detail-row { display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-top:1px solid #E2E8F0; }
+        .event-detail-row:first-child { border-top:0; }
+        .event-detail-row-icon { width:22px; flex:0 0 22px; color:var(--primary); margin-top:1px; }
+        .event-detail-row-icon svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+        .event-detail-row-content { flex:1; min-width:0; }
+        .event-detail-row-label { font-size:11px; color:var(--text-muted); margin-bottom:2px; }
+        .event-detail-row-value { font-size:14px; font-weight:600; color:var(--text-main); white-space:pre-wrap; word-break:break-word; }
+        .event-detail-actions { display:flex; gap:10px; margin-top:24px; }
+        .event-detail-actions button { flex:1; }
+        .event-detail-actions .danger { background:var(--red); color:white; border-color:var(--red); }
+        .theme-dark .event-detail-icon { background:#273244; }
+        .theme-dark .event-detail-row { border-top-color:#374151; }
+
+        .theme-dark .calendar-card { background:#1F2937; }
+        .theme-dark .calendar-event { border-bottom-color:#374151; }
+        .theme-dark .calendar-event-icon { background:#273244; }
+
 
         /* Cartões Visuais */
         .card-main {
@@ -862,6 +922,9 @@
         .modal-buttons .btn-cancel { background: #E2E8F0; color: var(--text-main); }
         .modal-buttons .btn-confirm-del { background: var(--red); color: white; }
 
+
+        .back-header.no-back { justify-content:flex-start; }
+        .back-header.no-back h2 { margin-left:0; }
         .settings-menu-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}.settings-menu-row{width:100%;display:flex;align-items:center;gap:11px;padding:15px 16px;border:0;border-bottom:1px solid #EEF2F7;background:#fff;text-align:left;cursor:pointer;color:var(--text)}.settings-menu-row:last-child{border-bottom:0}.settings-menu-row:active{background:#F8FAFC}.settings-menu-text{display:flex;flex-direction:column;gap:2px;flex:1}.settings-menu-text strong{font-size:14px;font-weight:700}.settings-menu-text small{font-size:11px;color:var(--text-muted);line-height:1.3}.settings-chevron{font-size:24px;line-height:1;color:#94A3B8;margin-left:4px}.settings-danger-row .settings-icon{color:var(--red);background:#FEF2F2}.settings-danger-row .settings-menu-text strong{color:var(--red)}
         /* Cabeçalho Voltar */
         .back-header {
@@ -973,7 +1036,10 @@
                         <div class="avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M6 20a6 6 0 0 1 12 0"/><circle cx="5" cy="10" r="2"/><path d="M1.8 20a4 4 0 0 1 6.4-3.2"/><circle cx="19" cy="10" r="2"/><path d="M22.2 20a4 4 0 0 0-6.4-3.2"/></svg></div>
                         <h1>Casa Financeira</h1>
                     </div>
-                    <button class="settings-btn" onclick="navigate('definicoes')" aria-label="Definições"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="17" r="2" fill="currentColor" stroke="none"/></svg></button>
+                    <div class="header-actions">
+                        <button class="calendar-btn" onclick="navigate('calendario')" aria-label="Calendário"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></button>
+                        <button class="settings-btn" onclick="navigate('definicoes')" aria-label="Definições"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="17" r="2" fill="currentColor" stroke="none"/></svg></button>
+                    </div>
                 </header>
 
                 <div class="card-main" style="position:relative;">
@@ -1243,12 +1309,57 @@
                         </label>
                     </div>
                     <button type="submit" class="btn-large">Guardar Despesa Fixa</button>
+                    <button type="button" id="btn-delete-fixa" class="btn-outline danger" style="display:none; margin-top:10px; width:100%;" onclick="eliminarFixaAtual()">Eliminar despesa fixa</button>
+                </form>
+            </div>
+
+            <!-- ================= ECRÃ: CALENDÁRIO ================= -->
+            <div id="screen-calendario" class="screen">
+                <div class="back-header no-back"><h2>Calendário</h2></div>
+                <div class="calendar-card">
+                    <div class="calendar-toolbar">
+                        <button class="calendar-nav-btn" type="button" onclick="moverMesCalendario(-1)" aria-label="Mês anterior">‹</button>
+                        <h3 id="calendar-month-title">Setembro 2026</h3>
+                        <button class="calendar-nav-btn" type="button" onclick="moverMesCalendario(1)" aria-label="Mês seguinte">›</button>
+                    </div>
+                    <div class="calendar-week"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span></div>
+                    <div class="calendar-grid" id="calendar-grid"></div>
+                    <div class="calendar-day-list" id="calendar-day-list"></div>
+                </div>
+                <button class="btn-outline" type="button" onclick="abrirNovoEvento()">+ Adicionar evento</button>
+            </div>
+
+            <!-- ================= ECRÃ: DETALHE DO EVENTO ================= -->
+            <div id="screen-detalhe-evento" class="screen">
+                <div class="back-header"><button class="back-btn" onclick="navigate('calendario')">←</button><h2>Detalhe do evento</h2></div>
+                <div class="event-detail-card">
+                    <div class="event-detail-icon"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg></div>
+                    <h3 id="evento-detail-title" class="event-detail-title">Evento</h3>
+                    <div id="evento-detail-date" class="event-detail-date"></div>
+                    <div id="evento-detail-info" class="event-detail-info"></div>
+                </div>
+                <div class="event-detail-actions">
+                    <button type="button" class="btn-outline" onclick="editarEventoDetalhe()">Editar</button>
+                    <button type="button" class="btn-outline danger" onclick="eliminarEventoDetalhe()">Eliminar</button>
+                </div>
+            </div>
+
+            <!-- ================= ECRÃ: NOVO EVENTO ================= -->
+            <div id="screen-novo-evento" class="screen">
+                <div class="back-header"><button class="back-btn" onclick="navigate('calendario')">←</button><h2 id="evento-form-title">Novo evento</h2></div>
+                <form id="evento-form" onsubmit="guardarEvento(event)">
+                    <div class="form-group"><label>Título</label><input id="evento-titulo" class="form-control" type="text" placeholder="Ex.: Consulta médica" required></div>
+                    <div class="form-group"><label>Data</label><input id="evento-data" class="form-control" type="date" required></div>
+                    <div class="form-group"><label>Hora <span style="color:var(--text-muted);font-weight:400">(opcional)</span></label><input id="evento-hora" class="form-control" type="time"></div>
+                    <div class="form-group"><label>Local <span style="color:var(--text-muted);font-weight:400">(opcional)</span></label><input id="evento-local" class="form-control" type="text" placeholder="Ex.: Clínica X"></div>
+                    <div class="form-group"><label>Notas <span style="color:var(--text-muted);font-weight:400">(opcional)</span></label><textarea id="evento-notas" class="form-control" rows="4" placeholder="Notas sobre o evento"></textarea></div>
+                    <div class="calendar-form-actions"><button type="button" class="btn-outline" onclick="navigate('calendario')">Cancelar</button><button type="submit" class="btn-large" style="margin-top:0;flex:1">Guardar evento</button></div>
                 </form>
             </div>
 
             <!-- ================= ECRÃ: DEFINIÇÕES ================= -->
             <div id="screen-definicoes" class="screen">
-                <div class="back-header"><button class="back-btn" onclick="navigate('inicio')">←</button><h2>Definições</h2></div>
+                <div class="back-header no-back"><h2>Definições</h2></div>
                 <div class="settings-menu-card">
                     <button class="settings-menu-row" type="button" onclick="navigate('seguranca')">
                         <span class="settings-icon"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
@@ -1583,7 +1694,8 @@
             contas: [],
             movimentos: [],
             investimentos: [],
-            despesasFixas: []
+            despesasFixas: [],
+            eventos: []
         };
 
         // Carregar do LocalStorage se existir
@@ -1592,6 +1704,7 @@
         }
 
         if (!Array.isArray(state.investimentos)) state.investimentos = [];
+        if (!Array.isArray(state.eventos)) state.eventos = [];
 
         function saveState() {
             localStorage.setItem("familia_feliz_state", JSON.stringify(state));
@@ -1642,6 +1755,7 @@
             if (screenId === 'fixas') renderFixas();
             if (screenId === 'relatorios') renderRelatorios();
             if (screenId === 'investimentos') renderInvestimentos();
+            if (screenId === 'calendario') renderCalendario();
             if (screenId === 'investimento-detalhe') renderInvestimentoDetalhe();
             if (screenId === 'definicoes') renderDefinicoes();
             if (screenId === 'seguranca') renderDefinicoes();
@@ -2228,6 +2342,7 @@
             document.getElementById("form-fixa").reset();
             document.getElementById("fixa-id").value = "";
             document.getElementById("fixa-title-screen").innerText = "Nova despesa fixa";
+            document.getElementById("btn-delete-fixa").style.display = "none";
             document.getElementById("fixa-active").checked = true;
             selectCategory("fixa-cat", "Casa");
             navigate('editar-fixa');
@@ -2239,6 +2354,7 @@
 
             document.getElementById("fixa-id").value = fixa.id;
             document.getElementById("fixa-title-screen").innerText = "Editar despesa fixa";
+            document.getElementById("btn-delete-fixa").style.display = "block";
             document.getElementById("fixa-name").value = fixa.name || fixa.nome;
             document.getElementById("fixa-val").value = fixa.valor;
             selectCategory("fixa-cat", fixa.categoria);
@@ -2278,6 +2394,17 @@
 
             saveState();
             navigate('fixas');
+        }
+
+        function eliminarFixaAtual(){
+            const id=document.getElementById("fixa-id").value;
+            const fixa=(state.despesasFixas||[]).find(f=>f.id===id);
+            if(!fixa)return;
+            mostrarDataModal({title:'Eliminar despesa fixa',message:`Queres eliminar “${fixa.nome}”?`,confirmText:'Eliminar',danger:true,icon:'danger',onConfirm:()=>{
+                state.despesasFixas=state.despesasFixas.filter(f=>f.id!==id);
+                saveState();
+                navigate('fixas');
+            }});
         }
 
         // Mês atualmente selecionado no relatório
@@ -2536,6 +2663,56 @@
         function apagarTodosOsDados(){
             mostrarDataModal({title:'Apagar todos os dados',message:'Esta ação não pode ser anulada. Queres continuar?',confirmText:'Continuar',onConfirm:()=>mostrarDataModal({title:'Confirmação final',message:'Serão eliminados movimentos, contas, despesas fixas e investimentos. Tens a certeza?',confirmText:'Apagar tudo',danger:true,icon:'danger',onConfirm:()=>{localStorage.removeItem('familia_feliz_state');state={contas:[],movimentos:[],despesasFixas:[],investimentos:[]};recalcularTudo();mostrarDataModal({title:'Dados apagados',message:'Todos os dados da aplicação foram eliminados.',confirmText:'OK',cancelText:null,icon:'success',onConfirm:()=>navigate('inicio')});}})});
         }
+
+        let calendarioMes = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        let calendarioDiaSelecionado = new Date().toISOString().slice(0,10);
+        let eventoEmEdicaoId = null;
+        const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        function dataLocalStr(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+        function formatarDataEvento(v){ if(!v)return ''; const [y,m,d]=v.split('-'); return `${d}/${m}/${y}`; }
+        function renderCalendario(){
+            const title=document.getElementById('calendar-month-title'), grid=document.getElementById('calendar-grid'), list=document.getElementById('calendar-day-list');
+            if(!title||!grid||!list)return;
+            title.textContent=`${nomesMeses[calendarioMes.getMonth()]} ${calendarioMes.getFullYear()}`;
+            const first=new Date(calendarioMes.getFullYear(),calendarioMes.getMonth(),1); const days=new Date(calendarioMes.getFullYear(),calendarioMes.getMonth()+1,0).getDate();
+            let start=(first.getDay()+6)%7; let html='';
+            for(let i=0;i<start;i++) html+='<button class="calendar-day empty" type="button"></button>';
+            for(let day=1;day<=days;day++){
+                const d=new Date(calendarioMes.getFullYear(),calendarioMes.getMonth(),day), key=dataLocalStr(d);
+                const has=(state.eventos||[]).some(e=>e.data===key); const today=key===dataLocalStr(new Date()); const selected=key===calendarioDiaSelecionado;
+                html+=`<button class="calendar-day${today?' today':''}${selected?' selected':''}" type="button" onclick="selecionarDiaCalendario('${key}')">${day}${has?'<span class="event-dot"></span>':''}</button>`;
+            }
+            grid.innerHTML=html;
+            const events=(state.eventos||[]).filter(e=>e.data===calendarioDiaSelecionado).sort((a,b)=>(a.hora||'99:99').localeCompare(b.hora||'99:99'));
+            if(!events.length){ list.innerHTML='<div class="calendar-empty">Sem eventos neste dia.</div>'; return; }
+            list.innerHTML=events.map(e=>`<button type="button" class="calendar-event" style="width:100%;text-align:left;border-top:0;border-left:0;border-right:0;cursor:pointer;background:transparent;" onclick="abrirDetalheEvento('${e.id}')"><div class="calendar-event-icon"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg></div><div class="calendar-event-main"><div class="calendar-event-title">${esc(e.titulo)}</div><div class="calendar-event-meta">${formatarDataEvento(e.data)}</div></div><span class="settings-chevron" style="font-size:22px;">›</span></button>`).join('');
+        }
+        function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+        function selecionarDiaCalendario(key){calendarioDiaSelecionado=key;renderCalendario();}
+        function moverMesCalendario(delta){calendarioMes=new Date(calendarioMes.getFullYear(),calendarioMes.getMonth()+delta,1); const max=dataLocalStr(new Date(calendarioMes.getFullYear(),calendarioMes.getMonth()+1,0)); if(calendarioDiaSelecionado.slice(0,7)!==max.slice(0,7)) calendarioDiaSelecionado=dataLocalStr(new Date(calendarioMes.getFullYear(),calendarioMes.getMonth(),1)); renderCalendario();}
+        function abrirNovoEvento(){eventoEmEdicaoId=null;document.getElementById('evento-form').reset();document.getElementById('evento-data').value=calendarioDiaSelecionado||dataLocalStr(new Date());document.getElementById('evento-form-title').textContent='Novo evento';navigate('novo-evento');}
+        let eventoDetalheId = null;
+        function abrirDetalheEvento(id){
+            const e=(state.eventos||[]).find(x=>x.id===id);
+            if(!e)return;
+            eventoDetalheId=id;
+            const title=document.getElementById('evento-detail-title');
+            const date=document.getElementById('evento-detail-date');
+            const info=document.getElementById('evento-detail-info');
+            if(title)title.textContent=e.titulo||'Evento';
+            if(date)date.textContent=`${formatarDataEvento(e.data)}${e.hora?' · '+e.hora:''}`;
+            let rows='';
+            if(e.local) rows+=`<div class="event-detail-row"><div class="event-detail-row-icon"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div class="event-detail-row-content"><div class="event-detail-row-label">Local</div><div class="event-detail-row-value">${esc(e.local)}</div></div></div>`;
+            if(e.notas) rows+=`<div class="event-detail-row"><div class="event-detail-row-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div><div class="event-detail-row-content"><div class="event-detail-row-label">Notas</div><div class="event-detail-row-value">${esc(e.notas)}</div></div></div>`;
+            if(!rows) rows='<div class="calendar-empty" style="padding:10px 0 0;">Sem detalhes adicionais.</div>';
+            if(info)info.innerHTML=rows;
+            navigate('detalhe-evento');
+        }
+        function editarEventoDetalhe(){ if(eventoDetalheId) editarEvento(eventoDetalheId); }
+        function eliminarEventoDetalhe(){ if(!eventoDetalheId)return; const id=eventoDetalheId; const e=(state.eventos||[]).find(x=>x.id===id); if(!e)return; mostrarDataModal({title:'Eliminar evento',message:`Queres eliminar “${e.titulo}”?`,confirmText:'Eliminar',danger:true,icon:'danger',onConfirm:()=>{state.eventos=state.eventos.filter(x=>x.id!==id);eventoDetalheId=null;saveState();navigate('calendario');}}); }
+        function editarEvento(id){const e=(state.eventos||[]).find(x=>x.id===id);if(!e)return;eventoEmEdicaoId=id;document.getElementById('evento-titulo').value=e.titulo||'';document.getElementById('evento-data').value=e.data||'';document.getElementById('evento-hora').value=e.hora||'';document.getElementById('evento-local').value=e.local||'';document.getElementById('evento-notas').value=e.notas||'';document.getElementById('evento-form-title').textContent='Editar evento';navigate('novo-evento');}
+        function guardarEvento(ev){ev.preventDefault();const obj={id:eventoEmEdicaoId||'ev_'+Date.now(),titulo:document.getElementById('evento-titulo').value.trim(),data:document.getElementById('evento-data').value,hora:document.getElementById('evento-hora').value,local:document.getElementById('evento-local').value.trim(),notas:document.getElementById('evento-notas').value.trim(),lembreteAtivo:false,lembreteMinutos:0};if(!obj.titulo||!obj.data)return;if(eventoEmEdicaoId){const i=state.eventos.findIndex(e=>e.id===eventoEmEdicaoId);if(i>=0)state.eventos[i]=obj;}else state.eventos.push(obj);saveState();calendarioDiaSelecionado=obj.data;calendarioMes=new Date(obj.data+'T00:00:00');navigate('calendario');}
+        function eliminarEvento(id){const e=(state.eventos||[]).find(x=>x.id===id);if(!e)return;mostrarDataModal({title:'Eliminar evento',message:`Queres eliminar “${e.titulo}”?`,confirmText:'Eliminar',danger:true,icon:'danger',onConfirm:()=>{state.eventos=state.eventos.filter(x=>x.id!==id);saveState();renderCalendario();}});}
 
         function renderDefinicoes(){const ativo=!!localStorage.getItem('familia_feliz_pin_hash');const st=document.getElementById('pin-status-text');if(st)st.innerText=ativo?'PIN ativo — a aplicação pede o código ao abrir.':'Sem PIN definido';const fl=document.getElementById('pin-form-label');if(fl)fl.innerText=ativo?'Novo PIN de 4 dígitos':'Definir PIN de 4 dígitos';const sb=document.getElementById('pin-save-btn');if(sb)sb.innerText=ativo?'Alterar PIN':'Ativar bloqueio';const rb=document.getElementById('pin-remove-btn');if(rb)rb.style.display=ativo?'block':'none';const pn=document.getElementById('pin-new');const pc=document.getElementById('pin-confirm');if(pn)pn.value='';if(pc)pc.value='';const al=document.getElementById('autolock-select');if(al)al.value=localStorage.getItem('familia_feliz_autolock')||'0'}
         function renderAparencia(){const theme=localStorage.getItem('familia_feliz_theme')||'light';const sel=document.getElementById('theme-select');if(sel)sel.value=theme;const sec=document.getElementById('secret-start-toggle');if(sec)sec.checked=localStorage.getItem('familia_feliz_secret_start')==='1'}
