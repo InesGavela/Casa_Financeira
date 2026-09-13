@@ -69,71 +69,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        /* Quando instalada como PWA no telemóvel, a aplicação usa todo o ecrã.
-           O simulador com moldura mantém-se apenas no navegador/PC. */
-        @media (display-mode: standalone), (display-mode: fullscreen) {
-            html, body {
-                width: 100%;
-                height: 100%;
-                min-height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-            body {
-                display: block;
-                background: var(--bg-app);
-                overflow: hidden;
-            }
-            .phone-container {
-                width: 100vw;
-                height: 100dvh;
-                min-height: 100vh;
-                border: 0;
-                border-radius: 0;
-                box-shadow: none;
-            }
-            .status-bar { display: none; }
-            .phone-container {
-                padding-top: env(safe-area-inset-top);
-                box-sizing: border-box;
-            }
-            .bottom-nav {
-                height: calc(76px + env(safe-area-inset-bottom));
-                padding-bottom: calc(12px + env(safe-area-inset-bottom));
-            }
-        }
-
-        html.ios-standalone,
-        html.ios-standalone body {
-            width: 100%;
-            height: 100%;
-            min-height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        html.ios-standalone body {
-            display: block;
-            background: var(--bg-app);
-        }
-        html.ios-standalone .phone-container {
-            width: 100vw;
-            height: 100dvh;
-            min-height: 100vh;
-            border: 0;
-            border-radius: 0;
-            box-shadow: none;
-        }
-        html.ios-standalone .status-bar { display: none; }
-        html.ios-standalone .phone-container {
-            padding-top: env(safe-area-inset-top);
-            box-sizing: border-box;
-        }
-        html.ios-standalone .bottom-nav {
-            height: calc(76px + env(safe-area-inset-bottom));
-            padding-bottom: calc(12px + env(safe-area-inset-bottom));
-        }
-
         /* Notsh / Status Bar */
         .status-bar {
             height: 44px;
@@ -201,10 +136,30 @@
             color: var(--primary);
         }
         .app-header .settings-btn {
-            background: none;
-            border: none;
-            font-size: 22px;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border: 0;
+            border-radius: 11px;
+            background: #F5F7FA;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+        }
+        .app-header .settings-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .theme-dark .app-header .settings-btn {
+            background: #1F2937;
+            color: #CBD5E1;
         }
 
         /* Cartões Visuais */
@@ -381,7 +336,7 @@
             cursor:pointer; padding:0;
         }
         .privacy-toggle svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-        .privacy-hidden { letter-spacing:3px; }
+        .privacy-hidden { filter:blur(7px); opacity:.72; user-select:none; pointer-events:none; transition:filter .18s ease, opacity .18s ease; }
         .health-card{background:#fff;border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:20px}.health-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.health-title{font-size:14px;font-weight:700;color:var(--primary)}.health-badge{font-size:11px;font-weight:700;padding:5px 9px;border-radius:999px}.health-score-row{display:flex;align-items:center;gap:12px}.health-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center}.health-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.health-text{font-size:12px;color:var(--text-muted);line-height:1.4}.settings-card{background:#fff;border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}.settings-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.settings-row .left{display:flex;align-items:center;gap:11px}.settings-icon{width:38px;height:38px;border-radius:11px;background:#F5F7FA;color:var(--primary);display:flex;align-items:center;justify-content:center}.settings-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.settings-meta{font-size:11px;color:var(--text-muted);margin-top:2px}.pin-input{text-align:center;letter-spacing:8px;font-size:22px;font-weight:700}.pin-overlay{position:absolute;inset:0;background:rgba(15,23,42,.96);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px}.pin-box{width:100%;background:#fff;border-radius:22px;padding:26px 22px;text-align:center;box-shadow:0 20px 45px rgba(0,0,0,.3)}.pin-lock-icon{width:54px;height:54px;border-radius:17px;margin:0 auto 14px;background:#F5F7FA;color:var(--primary);display:flex;align-items:center;justify-content:center}.pin-lock-icon svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.pin-error{color:var(--red);font-size:12px;min-height:18px;margin-top:8px}
 
 
@@ -560,12 +515,20 @@
         .filters-row select, .filters-row input {
             width: 100%;
             min-width: 0;
-            padding: 8px 7px;
+            height: 34px;
+            box-sizing: border-box;
+            padding: 7px 7px;
             border-radius: 8px;
             border: 1px solid #E2E8F0;
             font-size: 11px;
+            line-height: 1.2;
             background: white;
             color: var(--text-main);
+        }
+        .filters-row input[type="date"] {
+            -webkit-appearance: none;
+            appearance: none;
+            padding-right: 7px;
         }
         .filters-row #search-mov {
             grid-column: 1 / -1;
@@ -890,7 +853,7 @@
                         <div class="avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M6 20a6 6 0 0 1 12 0"/><circle cx="5" cy="10" r="2"/><path d="M1.8 20a4 4 0 0 1 6.4-3.2"/><circle cx="19" cy="10" r="2"/><path d="M22.2 20a4 4 0 0 0-6.4-3.2"/></svg></div>
                         <h1>Casa Financeira</h1>
                     </div>
-                    <button class="settings-btn" onclick="navigate('definicoes')" aria-label="Definições"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 1.7-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.2h-2.4v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1L8 17l.1-.1A1.7 1.7 0 0 0 8.4 15a1.7 1.7 0 0 0-1.5-1H6.7v-2.4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L8 8.6l1.7-1.7.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5v-.2h2.4v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.7 1.7-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.2V14h-.2a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+                    <button class="settings-btn" onclick="navigate('definicoes')" aria-label="Definições"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="17" r="2" fill="currentColor" stroke="none"/></svg></button>
                 </header>
 
                 <div class="card-main" style="position:relative;">
@@ -1487,43 +1450,6 @@
 
         if (!Array.isArray(state.investimentos)) state.investimentos = [];
 
-        // Migração única: versões anteriores vinham com dados de demonstração.
-        // Só são removidos se o estado ainda for exatamente o conjunto dummy original;
-        // dados reais já introduzidos pelo utilizador nunca são apagados.
-        (function limparDadosDemoAntigos(){
-            const contasNormalizadas = (state.contas || []).map(c => ({
-                id:c.id, nome:c.nome, saldo:Number(c.saldo ?? c.saldoInicial ?? 0)
-            }));
-            const demoContas = [
-                {id:'c1',nome:'Conta Principal',saldo:2350},
-                {id:'c2',nome:'Conta Poupança',saldo:5800},
-                {id:'c3',nome:'Conta Casa',saldo:1200}
-            ];
-            const demoMovimentos = [
-                {id:'m1',tipo:'despesa',valor:35.8,categoria:'Alimentação',contaId:'c1',data:'2026-09-10',descricao:'Supermercado'},
-                {id:'m2',tipo:'despesa',valor:42.5,categoria:'Alimentação',contaId:'c1',data:'2026-09-10',descricao:'Restaurante'},
-                {id:'m3',tipo:'receita',valor:2300,categoria:'Salário',contaId:'c1',data:'2026-09-01',descricao:'Salário Setembro'},
-                {id:'m4',tipo:'receita',valor:200,categoria:'Outros',contaId:'c2',data:'2026-09-01',descricao:'Rendimento Extra'}
-            ];
-            const demoFixas = [
-                {id:'f1',nome:'Prestação da casa',valor:650,categoria:'Casa',dia:27,ativa:true},
-                {id:'f2',nome:'Internet / Telefone',valor:45,categoria:'Financeiro',dia:5,ativa:true},
-                {id:'f3',nome:'Colégio',valor:350,categoria:'Família',dia:8,ativa:true}
-            ];
-            const normalize = v => JSON.stringify(v);
-            const fixasNormalizadas = (state.despesasFixas || []).map(f => ({id:f.id,nome:f.nome,valor:Number(f.valor),categoria:f.categoria,dia:Number(f.dia),ativa:!!f.ativa}));
-            const movimentosNormalizados = (state.movimentos || []).map(m => ({id:m.id,tipo:m.tipo,valor:Number(m.valor),categoria:m.categoria,contaId:m.contaId ?? null,data:m.data,descricao:m.descricao}));
-            const isOldDemo = Number(state.saldoAnterior)===800
-                && normalize(contasNormalizadas)===normalize(demoContas)
-                && normalize(movimentosNormalizados)===normalize(demoMovimentos)
-                && normalize(fixasNormalizadas)===normalize(demoFixas)
-                && (!state.investimentos || state.investimentos.length===0);
-            if(isOldDemo){
-                state = {saldoAnterior:0,contas:[],movimentos:[],despesasFixas:[],investimentos:[]};
-                localStorage.setItem('familia_feliz_state', JSON.stringify(state));
-            }
-        })();
-
         function saveState() {
             localStorage.setItem("familia_feliz_state", JSON.stringify(state));
             recalcularTudo();
@@ -1709,11 +1635,8 @@
                 const el = document.getElementById(id);
                 if (!el) return;
                 if (privacyMode) {
-                    el.dataset.originalValue = el.innerText;
-                    el.innerText = '••••••';
                     el.classList.add('privacy-hidden');
                 } else {
-                    el.innerText = el.dataset.originalValue || el.innerText;
                     el.classList.remove('privacy-hidden');
                 }
             });
@@ -2432,14 +2355,7 @@
         async function desbloquearApp(){const p=document.getElementById('pin-unlock').value,saved=localStorage.getItem('familia_feliz_pin_hash'),err=document.getElementById('pin-error');if(!saved){document.getElementById('pin-overlay').style.display='none';return}if(await hashPin(p)===saved){document.getElementById('pin-overlay').style.display='none';document.getElementById('pin-unlock').value='';err.innerText='';resetAutoLockTimer()}else{err.innerText='PIN incorreto. Tente novamente.';document.getElementById('pin-unlock').value=''}}
 
         // Inicialização primária automática ao abrir a aplicação
-        if (window.navigator && window.navigator.standalone === true) {
-            document.documentElement.classList.add('ios-standalone');
-        }
-
         window.onload = function() {
-            if (window.navigator && window.navigator.standalone === true) {
-                document.documentElement.classList.add('ios-standalone');
-            }
             applyTheme(localStorage.getItem('familia_feliz_theme')||'light');
             initCategoryIcons();
             renderHome();
