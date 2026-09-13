@@ -533,6 +533,7 @@
         .date-filter-wrap {
             position: relative;
             min-width: 0;
+            height: 34px;
         }
         .date-filter-wrap .date-placeholder {
             position: absolute;
@@ -546,7 +547,12 @@
             transition: opacity .12s ease;
         }
         .date-filter-wrap.has-value .date-placeholder { opacity: 0; }
-        .date-filter-wrap input[type="date"] { position: relative; z-index: 2; background: transparent; }
+        .date-filter-wrap input[type="date"] {
+            position: relative; z-index: 2; background: white;
+            width: 100%; min-width: 0; height: 34px; box-sizing: border-box;
+            padding: 7px 7px; border-radius: 8px; border: 1px solid #E2E8F0;
+            font-size: 11px; line-height: 1.2; color: var(--text-main);
+        }
         .category-filter { position: relative; min-width: 0; }
         .category-filter-btn {
             width: 100%; height: 34px; box-sizing: border-box;
@@ -1042,7 +1048,7 @@
                     <div class="form-group">
                         <label>Categoria</label>
                         <input type="hidden" id="exp-cat" required>
-<div class="category-picker"><button type="button" class="category-option" data-value="Casa" onclick="selectCategory('exp-cat', 'Casa', this)"><span class="cat-icon" data-category-icon="Casa"></span><span>Casa</span></button><button type="button" class="category-option" data-value="Alimentação" onclick="selectCategory('exp-cat', 'Alimentação', this)"><span class="cat-icon" data-category-icon="Alimentação"></span><span>Alimentação</span></button><button type="button" class="category-option" data-value="Transportes" onclick="selectCategory('exp-cat', 'Transportes', this)"><span class="cat-icon" data-category-icon="Transportes"></span><span>Transportes</span></button><button type="button" class="category-option" data-value="Família" onclick="selectCategory('exp-cat', 'Família', this)"><span class="cat-icon" data-category-icon="Família"></span><span>Família</span></button><button type="button" class="category-option" data-value="Lazer" onclick="selectCategory('exp-cat', 'Lazer', this)"><span class="cat-icon" data-category-icon="Lazer"></span><span>Lazer</span></button><button type="button" class="category-option" data-value="Financeiro" onclick="selectCategory('exp-cat', 'Financeiro', this)"><span class="cat-icon" data-category-icon="Financeiro"></span><span>Financeiro</span></button><button type="button" class="category-option" data-value="Outras" onclick="selectCategory('exp-cat', 'Outras', this)"><span class="cat-icon" data-category-icon="Outras"></span><span>Outras</span></button></div>
+<div class="category-picker"><button type="button" class="category-option" data-value="Casa" onclick="selectCategory('exp-cat', 'Casa', this)"><span class="cat-icon" data-category-icon="Casa"></span><span>Casa</span></button><button type="button" class="category-option" data-value="Alimentação" onclick="selectCategory('exp-cat', 'Alimentação', this)"><span class="cat-icon" data-category-icon="Alimentação"></span><span>Alimentação</span></button><button type="button" class="category-option" data-value="Transportes" onclick="selectCategory('exp-cat', 'Transportes', this)"><span class="cat-icon" data-category-icon="Transportes"></span><span>Transportes</span></button><button type="button" class="category-option" data-value="Família" onclick="selectCategory('exp-cat', 'Família', this)"><span class="cat-icon" data-category-icon="Família"></span><span>Família</span></button><button type="button" class="category-option" data-value="Lazer" onclick="selectCategory('exp-cat', 'Lazer', this)"><span class="cat-icon" data-category-icon="Lazer"></span><span>Lazer</span></button><button type="button" class="category-option" data-value="Investimentos" onclick="selectCategory('exp-cat', 'Investimentos', this)"><span class="cat-icon" data-category-icon="Investimentos"></span><span>Investimentos</span></button><button type="button" class="category-option" data-value="Restauração" onclick="selectCategory('exp-cat', 'Restauração', this)"><span class="cat-icon" data-category-icon="Restauração"></span><span>Restauração</span></button><button type="button" class="category-option" data-value="Atividades" onclick="selectCategory('exp-cat', 'Atividades', this)"><span class="cat-icon" data-category-icon="Atividades"></span><span>Atividades</span></button></div>
                     </div>
                     <div class="form-group">
                         <label>Data</label>
@@ -1070,7 +1076,7 @@
                     <div class="form-group">
                         <label>Categoria</label>
                         <input type="hidden" id="inc-cat" required>
-<div class="category-picker"><button type="button" class="category-option" data-value="Salário" onclick="selectCategory('inc-cat', 'Salário', this)"><span class="cat-icon" data-category-icon="Salário"></span><span>Salário</span></button><button type="button" class="category-option" data-value="Outros" onclick="selectCategory('inc-cat', 'Outros', this)"><span class="cat-icon" data-category-icon="Outros"></span><span>Outros</span></button></div>
+<div class="category-picker"><button type="button" class="category-option" data-value="Salários" onclick="selectCategory('inc-cat', 'Salários', this)"><span class="cat-icon" data-category-icon="Salários"></span><span>Salários</span></button><button type="button" class="category-option" data-value="Juros" onclick="selectCategory('inc-cat', 'Juros', this)"><span class="cat-icon" data-category-icon="Juros"></span><span>Juros</span></button><button type="button" class="category-option" data-value="Transferências" onclick="selectCategory('inc-cat', 'Transferências', this)"><span class="cat-icon" data-category-icon="Transferências"></span><span>Transferências</span></button></div>
                     </div>
                     <div class="form-group">
                         <label>Data</label>
@@ -1109,12 +1115,14 @@
                             <button type="button" class="category-filter-option" data-value="Casa" onclick="selectFilterCategory('Casa','Casa')"><span class="cat-icon" data-category-icon="Casa"></span><span>Casa</span></button>
                             <button type="button" class="category-filter-option" data-value="Alimentação" onclick="selectFilterCategory('Alimentação','Alimentação')"><span class="cat-icon" data-category-icon="Alimentação"></span><span>Alimentação</span></button>
                             <button type="button" class="category-filter-option" data-value="Transportes" onclick="selectFilterCategory('Transportes','Transportes')"><span class="cat-icon" data-category-icon="Transportes"></span><span>Transportes</span></button>
-                            <button type="button" class="category-filter-option" data-value="Salário" onclick="selectFilterCategory('Salário','Salário')"><span class="cat-icon" data-category-icon="Salário"></span><span>Salário</span></button>
-                            <button type="button" class="category-filter-option" data-value="Outros" onclick="selectFilterCategory('Outros','Outros')"><span class="cat-icon" data-category-icon="Outros"></span><span>Outros</span></button>
                             <button type="button" class="category-filter-option" data-value="Família" onclick="selectFilterCategory('Família','Família')"><span class="cat-icon" data-category-icon="Família"></span><span>Família</span></button>
                             <button type="button" class="category-filter-option" data-value="Lazer" onclick="selectFilterCategory('Lazer','Lazer')"><span class="cat-icon" data-category-icon="Lazer"></span><span>Lazer</span></button>
-                            <button type="button" class="category-filter-option" data-value="Financeiro" onclick="selectFilterCategory('Financeiro','Financeiro')"><span class="cat-icon" data-category-icon="Financeiro"></span><span>Financeiro</span></button>
-                            <button type="button" class="category-filter-option" data-value="Outras" onclick="selectFilterCategory('Outras','Outras')"><span class="cat-icon" data-category-icon="Outras"></span><span>Outras</span></button>
+                            <button type="button" class="category-filter-option" data-value="Investimentos" onclick="selectFilterCategory('Investimentos','Investimentos')"><span class="cat-icon" data-category-icon="Investimentos"></span><span>Investimentos</span></button>
+                            <button type="button" class="category-filter-option" data-value="Restauração" onclick="selectFilterCategory('Restauração','Restauração')"><span class="cat-icon" data-category-icon="Restauração"></span><span>Restauração</span></button>
+                            <button type="button" class="category-filter-option" data-value="Atividades" onclick="selectFilterCategory('Atividades','Atividades')"><span class="cat-icon" data-category-icon="Atividades"></span><span>Atividades</span></button>
+                            <button type="button" class="category-filter-option" data-value="Salários" onclick="selectFilterCategory('Salários','Salários')"><span class="cat-icon" data-category-icon="Salários"></span><span>Salários</span></button>
+                            <button type="button" class="category-filter-option" data-value="Juros" onclick="selectFilterCategory('Juros','Juros')"><span class="cat-icon" data-category-icon="Juros"></span><span>Juros</span></button>
+                            <button type="button" class="category-filter-option" data-value="Transferências" onclick="selectFilterCategory('Transferências','Transferências')"><span class="cat-icon" data-category-icon="Transferências"></span><span>Transferências</span></button>
                         </div>
                     </div>
                 </div>
@@ -1200,7 +1208,7 @@
                     <div class="form-group">
                         <label>Categoria</label>
                         <input type="hidden" id="fixa-cat" required>
-<div class="category-picker"><button type="button" class="category-option" data-value="Casa" onclick="selectCategory('fixa-cat', 'Casa', this)"><span class="cat-icon" data-category-icon="Casa"></span><span>Casa</span></button><button type="button" class="category-option" data-value="Alimentação" onclick="selectCategory('fixa-cat', 'Alimentação', this)"><span class="cat-icon" data-category-icon="Alimentação"></span><span>Alimentação</span></button><button type="button" class="category-option" data-value="Transportes" onclick="selectCategory('fixa-cat', 'Transportes', this)"><span class="cat-icon" data-category-icon="Transportes"></span><span>Transportes</span></button><button type="button" class="category-option" data-value="Financeiro" onclick="selectCategory('fixa-cat', 'Financeiro', this)"><span class="cat-icon" data-category-icon="Financeiro"></span><span>Financeiro</span></button></div>
+<div class="category-picker"><button type="button" class="category-option" data-value="Casa" onclick="selectCategory('fixa-cat', 'Casa', this)"><span class="cat-icon" data-category-icon="Casa"></span><span>Casa</span></button><button type="button" class="category-option" data-value="Alimentação" onclick="selectCategory('fixa-cat', 'Alimentação', this)"><span class="cat-icon" data-category-icon="Alimentação"></span><span>Alimentação</span></button><button type="button" class="category-option" data-value="Transportes" onclick="selectCategory('fixa-cat', 'Transportes', this)"><span class="cat-icon" data-category-icon="Transportes"></span><span>Transportes</span></button><button type="button" class="category-option" data-value="Família" onclick="selectCategory('fixa-cat', 'Família', this)"><span class="cat-icon" data-category-icon="Família"></span><span>Família</span></button><button type="button" class="category-option" data-value="Lazer" onclick="selectCategory('fixa-cat', 'Lazer', this)"><span class="cat-icon" data-category-icon="Lazer"></span><span>Lazer</span></button><button type="button" class="category-option" data-value="Investimentos" onclick="selectCategory('fixa-cat', 'Investimentos', this)"><span class="cat-icon" data-category-icon="Investimentos"></span><span>Investimentos</span></button><button type="button" class="category-option" data-value="Restauração" onclick="selectCategory('fixa-cat', 'Restauração', this)"><span class="cat-icon" data-category-icon="Restauração"></span><span>Restauração</span></button><button type="button" class="category-option" data-value="Atividades" onclick="selectCategory('fixa-cat', 'Atividades', this)"><span class="cat-icon" data-category-icon="Atividades"></span><span>Atividades</span></button></div>
                     </div>
                     <div class="form-group">
                         <label>Dia do mês para débito efetivo (1 a 31)</label>
@@ -1578,8 +1586,12 @@
             "Lazer": '<svg viewBox="0 0 24 24"><path d="m4 5 16 16"/><path d="M20 5 4 21"/><path d="M7 3v4M17 3v4M3 7h4M17 7h4"/><path d="M12 9v6M9 12h6"/></svg>',
             "Financeiro": '<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="8" cy="15" r="1"/><path d="M13 15h4"/></svg>',
             "Outras": '<svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M8 7V5h8v2"/><path d="M8 12h8"/></svg>',
-            "Salário": '<svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 9h8M8 13h5M8 17h3"/></svg>',
-            "Outros": '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>'
+            "Investimentos": '<svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V6M16 19V13M22 19V3"/><path d="M3 19h20"/></svg>',
+            "Restauração": '<svg viewBox="0 0 24 24"><path d="M7 3v7M4.5 3v4.5A2.5 2.5 0 0 0 7 10a2.5 2.5 0 0 0 2.5-2.5V3"/><path d="M7 10v11M16 3v18"/></svg>',
+            "Atividades": '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>',
+            "Salários": '<svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 9h8M8 13h5M8 17h3"/></svg>',
+            "Juros": '<svg viewBox="0 0 24 24"><path d="M5 19 19 5"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+            "Transferências": '<svg viewBox="0 0 24 24"><path d="M7 7h12l-3-3"/><path d="M17 17H5l3 3"/><path d="M19 7 16 4M5 17l3 3"/></svg>'
         };
 
         // NAVEGAÇÃO DE ECRÃS E SINCRONIZAÇÃO DA TAB BAR
@@ -1617,7 +1629,7 @@
             } else {
                 document.getElementById("form-receita").reset();
                 document.getElementById("inc-date").value = todayStr;
-                selectCategory("inc-cat", "Salário");
+                selectCategory("inc-cat", "Salários");
                 navigate('nova-receita');
             }
         }
@@ -1832,7 +1844,7 @@
             incList.innerHTML = topIncomes.map(([cat, val]) => `
                 <li>
                     <div class="item-left">
-                        <div class="icon-wrapper">${iconMap[cat] || iconMap["Outros"]}</div>
+                        <div class="icon-wrapper">${iconMap[cat] || iconMap["Outras"]}</div>
                         <span class="item-name">${cat}</span>
                     </div>
                     <span class="item-val pos">+ ${val.toFixed(2)} €</span>
