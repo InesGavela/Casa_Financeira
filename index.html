@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#0b0f14">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -54,6 +54,10 @@
             min-height: 100vh;
             color: var(--text-main);
         }
+
+        /* Prevent accidental pinch/double-tap zoom inside the app. */
+        html, body { touch-action: manipulation; }
+
 
         /* Simulador de Telemóvel */
         .phone-container {
@@ -1558,7 +1562,21 @@
     </div>
 
     <!-- SISTEMA DE LÓGICA E DE CÁLCULO UNIFICADO -->
-    <script>
+    
+<script>
+// A app funciona como uma interface fixa: impede zoom acidental e evita que
+// o nível de zoom seja transportado entre ecrãs no iPhone/iPad.
+(function bloquearZoomApp(){
+    document.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
+    document.addEventListener('gesturechange', function(e){ e.preventDefault(); }, {passive:false});
+    document.addEventListener('gestureend', function(e){ e.preventDefault(); }, {passive:false});
+    document.addEventListener('touchmove', function(e){
+        if(e.touches && e.touches.length > 1) e.preventDefault();
+    }, {passive:false});
+    document.addEventListener('dblclick', function(e){ e.preventDefault(); }, {passive:false});
+})();
+</script>
+<script>
         // ESTADO GLOBAL DA APLICAÇÃO (Persistido via localStorage)
         let state = {
             saldoAnterior: 0,
