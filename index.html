@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Casa Financeira">
     <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
     <title>Família Feliz - Gestão Orçamental</title>
     <style>
         :root {
@@ -92,9 +92,10 @@
                 border-radius: 0;
                 box-shadow: none;
             }
-            .status-bar {
-                height: calc(44px + env(safe-area-inset-top));
+            .status-bar { display: none; }
+            .phone-container {
                 padding-top: env(safe-area-inset-top);
+                box-sizing: border-box;
             }
             .bottom-nav {
                 height: calc(76px + env(safe-area-inset-bottom));
@@ -123,9 +124,10 @@
             border-radius: 0;
             box-shadow: none;
         }
-        html.ios-standalone .status-bar {
-            height: calc(44px + env(safe-area-inset-top));
+        html.ios-standalone .status-bar { display: none; }
+        html.ios-standalone .phone-container {
             padding-top: env(safe-area-inset-top);
+            box-sizing: border-box;
         }
         html.ios-standalone .bottom-nav {
             height: calc(76px + env(safe-area-inset-bottom));
@@ -1489,30 +1491,36 @@
         // Só são removidos se o estado ainda for exatamente o conjunto dummy original;
         // dados reais já introduzidos pelo utilizador nunca são apagados.
         (function limparDadosDemoAntigos(){
-            const demoContas = JSON.stringify([
-                {id:"c1",nome:"Conta Principal",saldoInicial:2350},
-                {id:"c2",nome:"Conta Poupança",saldoInicial:5800},
-                {id:"c3",nome:"Conta Casa",saldoInicial:1200}
-            ]);
-            const demoMovimentos = JSON.stringify([
-                {id:"m1",tipo:"despesa",valor:35.8,categoria:"Alimentação",contaId:"c1",data:"2026-09-10",descricao:"Supermercado"},
-                {id:"m2",tipo:"despesa",valor:42.5,categoria:"Alimentação",contaId:"c1",data:"2026-09-10",descricao:"Restaurante"},
-                {id:"m3",tipo:"receita",valor:2300,categoria:"Salário",contaId:"c1",data:"2026-09-01",descricao:"Salário Setembro"},
-                {id:"m4",tipo:"receita",valor:200,categoria:"Outros",contaId:"c2",data:"2026-09-01",descricao:"Rendimento Extra"}
-            ]);
-            const demoFixas = JSON.stringify([
-                {id:"f1",nome:"Prestação da casa",valor:650,categoria:"Casa",dia:27,ativa:true},
-                {id:"f2",nome:"Internet / Telefone",valor:45,categoria:"Financeiro",dia:5,ativa:true},
-                {id:"f3",nome:"Colégio",valor:350,categoria:"Família",dia:8,ativa:true}
-            ]);
-            const isOldDemo = Number(state.saldoAnterior)===800 &&
-                JSON.stringify(state.contas||[])===demoContas &&
-                JSON.stringify(state.movimentos||[])===demoMovimentos &&
-                JSON.stringify(state.despesasFixas||[])===demoFixas &&
-                (!state.investimentos || state.investimentos.length===0);
+            const contasNormalizadas = (state.contas || []).map(c => ({
+                id:c.id, nome:c.nome, saldo:Number(c.saldo ?? c.saldoInicial ?? 0)
+            }));
+            const demoContas = [
+                {id:'c1',nome:'Conta Principal',saldo:2350},
+                {id:'c2',nome:'Conta Poupança',saldo:5800},
+                {id:'c3',nome:'Conta Casa',saldo:1200}
+            ];
+            const demoMovimentos = [
+                {id:'m1',tipo:'despesa',valor:35.8,categoria:'Alimentação',contaId:'c1',data:'2026-09-10',descricao:'Supermercado'},
+                {id:'m2',tipo:'despesa',valor:42.5,categoria:'Alimentação',contaId:'c1',data:'2026-09-10',descricao:'Restaurante'},
+                {id:'m3',tipo:'receita',valor:2300,categoria:'Salário',contaId:'c1',data:'2026-09-01',descricao:'Salário Setembro'},
+                {id:'m4',tipo:'receita',valor:200,categoria:'Outros',contaId:'c2',data:'2026-09-01',descricao:'Rendimento Extra'}
+            ];
+            const demoFixas = [
+                {id:'f1',nome:'Prestação da casa',valor:650,categoria:'Casa',dia:27,ativa:true},
+                {id:'f2',nome:'Internet / Telefone',valor:45,categoria:'Financeiro',dia:5,ativa:true},
+                {id:'f3',nome:'Colégio',valor:350,categoria:'Família',dia:8,ativa:true}
+            ];
+            const normalize = v => JSON.stringify(v);
+            const fixasNormalizadas = (state.despesasFixas || []).map(f => ({id:f.id,nome:f.nome,valor:Number(f.valor),categoria:f.categoria,dia:Number(f.dia),ativa:!!f.ativa}));
+            const movimentosNormalizados = (state.movimentos || []).map(m => ({id:m.id,tipo:m.tipo,valor:Number(m.valor),categoria:m.categoria,contaId:m.contaId ?? null,data:m.data,descricao:m.descricao}));
+            const isOldDemo = Number(state.saldoAnterior)===800
+                && normalize(contasNormalizadas)===normalize(demoContas)
+                && normalize(movimentosNormalizados)===normalize(demoMovimentos)
+                && normalize(fixasNormalizadas)===normalize(demoFixas)
+                && (!state.investimentos || state.investimentos.length===0);
             if(isOldDemo){
                 state = {saldoAnterior:0,contas:[],movimentos:[],despesasFixas:[],investimentos:[]};
-                localStorage.setItem("familia_feliz_state", JSON.stringify(state));
+                localStorage.setItem('familia_feliz_state', JSON.stringify(state));
             }
         })();
 
