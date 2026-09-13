@@ -950,25 +950,6 @@
             padding-top: env(safe-area-inset-top);
             padding-bottom: 90px;
         }
-        /* No iPhone instalado, a barra fica presa ao viewport real e encostada ao fundo. */
-        @media (display-mode: standalone), (display-mode: fullscreen) {
-            .bottom-nav {
-                position: fixed;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                width: 100vw;
-                transform: none !important;
-            }
-        }
-        html.ios-standalone .bottom-nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            transform: none !important;
-        }
 </style>
 </head>
 <body>
