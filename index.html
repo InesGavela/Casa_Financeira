@@ -1450,10 +1450,6 @@
                         <span>Data de Registo</span>
                         <strong id="det-date" style="color:#333;">10/09/2026</strong>
                     </div>
-                    <div class="sub-row" style="color:var(--text-muted); font-size:14px;">
-                        <span>Conta Associada</span>
-                        <strong id="det-account" style="color:#333;">Conta Principal</strong>
-                    </div>
                 </div>
 
                 <button class="btn-large" style="background:#E2E8F0; color:#333; margin-top:10px;" id="btn-trigger-edit-mov">Editar</button>
@@ -1874,6 +1870,7 @@
                     <span class="item-val pos">+ ${val.toFixed(2)} €</span>
                 </li>
             `).join('') || "<li style='color:var(--text-muted); font-size:13px;'>Nenhuma receita registada.</li>";
+            renderSaudeFinanceira();
         }
 
         // RENDERIZAR ECRÃ 5 (HISTÓRICO COMPLETO)
@@ -1963,9 +1960,6 @@
             document.getElementById("det-cat").innerText = mov.categoria;
             document.getElementById("det-date").innerText = mov.data;
             
-            let conta = state.contas.find(c => c.id === mov.contaId);
-            document.getElementById("det-account").innerText = conta ? conta.nome : "Conta Padrão";
-
             let valEl = document.getElementById("det-val");
             if (mov.tipo === 'receita') {
                 valEl.innerText = "+ " + mov.valor.toFixed(2) + " €";
